@@ -1,15 +1,19 @@
 import html
 import random
 import time
+
 from telegram import ParseMode, Update, ChatPermissions
 from telegram.ext import CallbackContext, run_async
 from telegram.error import BadRequest
+
 import OstaraBot.modules.fun_strings as fun_strings
 from OstaraBot import dispatcher
 from OstaraBot.modules.disable import DisableAbleCommandHandler
 from OstaraBot.modules.helper_funcs.chat_status import (is_user_admin)
 from OstaraBot.modules.helper_funcs.extraction import extract_user
+
 GIF_ID = 'CgACAgQAAx0CSVUvGgAC7KpfWxMrgGyQs-GUUJgt-TSO8cOIDgACaAgAAlZD0VHT3Zynpr5nGxsE'
+
 
 @run_async
 def runs(update: Update, context: CallbackContext):
