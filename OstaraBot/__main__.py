@@ -128,6 +128,7 @@ def test(update: Update, context: CallbackContext):
 @run_async
 def start(update: Update, context: CallbackContext):
     args = context.args
+    uptime = get_readable_time((time.time() - StartTime))
     if update.effective_chat.type == "private":
         if len(args) >= 1:
             if args[0].lower() == "help":
@@ -161,13 +162,15 @@ def start(update: Update, context: CallbackContext):
                 disable_web_page_preview=True,
                 reply_markup=InlineKeyboardMarkup([[
                     InlineKeyboardButton(
-                        text="Add Ostara to your group",
+                        text="Add OstaraBot to your group",
                         url="t.me/{}?startgroup=true".format(
                             context.bot.username))
                 ]]))
     else:
-        update.effective_message.reply_text("I'm online!\n<b>Up since:</b> <code>{}</code>".format(uptime),
+        update.effective_message.reply_text(
+            "I'm online!\n<b>Up since:</b> <code>{}</code>".format(uptime),
             parse_mode=ParseMode.HTML)
+
 
 
 # for test purposes
