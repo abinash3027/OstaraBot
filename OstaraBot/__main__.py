@@ -166,7 +166,8 @@ def start(update: Update, context: CallbackContext):
                             context.bot.username))
                 ]]))
     else:
-        update.effective_message.reply_text("I am already online!")
+        update.effective_message.reply_text("I'm online!\n<b>Up since:</b> <code>{}</code>".format(uptime),
+            parse_mode=ParseMode.HTML)
 
 
 # for test purposes
