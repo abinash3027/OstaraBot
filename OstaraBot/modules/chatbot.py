@@ -133,11 +133,8 @@ Chatbot utilizes the CoffeeHouse API and allows OstaraBot to talk and provides a
 *Admins only:*
  • `/addchat`*:* Enables Chatbot mode in the chat.
  • `/rmchat`*:* Disables Chatbot mode in the chat.
- 
-*Dragons or higher only:* 
- • `/listaichats`*:* Lists the chats the chatmode is enabled in.
 
-Reports bugs at {SUPPORT_CHAT}
+Reports bugs at @{SUPPORT_CHAT}
 *Powered by CoffeeHouse* (https://coffeehouse.intellivoid.net/) from @Intellivoid
 """
 
