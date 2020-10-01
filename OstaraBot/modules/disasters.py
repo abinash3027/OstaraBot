@@ -31,24 +31,16 @@ def check_user_id(user_id: int, context: CallbackContext) -> Optional[str]:
     return reply
 
 
-#I added extra new lines
-disasters = """ Ostara has bot access levels we call as *"Disaster Levels"*
-\n*Heroes Association* - Devs who can access the bots server and can execute, edit, modify bot code. Can also manage other Disasters
-\n*God* - Only one exists, bot owner. 
-Owner has complete bot access, including bot adminship in chats OstaraBot is at.
-\n*Dragons* - Have super user access, can gban, manage disasters lower than them and are admins in OstaraBot.
-\n*Demons* - Have access go globally ban users across OstaraBot.
-\n*Tigers* - Same as wolves but can unban themselves if banned.
-\n*Wolves* - Cannot be banned, muted flood kicked but can be manually banned by admins.
-\n*Disclaimer*: The disaster levels in OstaraBot are there for troubleshooting, support, banning potential scammers.
-Report abuse or ask us more on these at [Ostara Bot Support](https://t.me/OstaraBotSupport).
-"""
-
+# This can serve as a deeplink example.
+#disasters =
+# """ Text here """
 
 # do not async, not a handler
-def send_disasters(update):
-    update.effective_message.reply_text(
-        disasters, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+#def send_disasters(update):
+#    update.effective_message.reply_text(
+#        disasters, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+
+### Deep link example ends
 
 
 @run_async
@@ -534,11 +526,11 @@ Commands listed here only work for users with special access are mainly used for
 Group admins/group owners do not need these commands. 
 
  ╔ *List all special users:*
- ╠ `/dragons`*:* Lists all Dragon disasters.
- ╠ `/demons`*:* Lists all Demon disasters.
- ╠ `/tigers`*:* Lists all Tigers disasters.
- ╠ `/wolves`*:* Lists all Wolf disasters.
- ╚ `/heroes`*:* Lists all Hero Association members.
+ ╠ `/dragons`*:* Lists all Dragon disasters
+ ╠ `/demons`*:* Lists all Demon disasters
+ ╠ `/tigers`*:* Lists all Tigers disasters
+ ╠ `/wolves`*:* Lists all Wolf disasters
+ ╚ `/heroes`*:* Lists all Hero Association members
 
  ╔ *Ping:*
  ╠ `/ping`*:* gets ping time of bot to telegram server
@@ -551,18 +543,18 @@ Group admins/group owners do not need these commands.
  ╚ `/broadcastgroups`*:* Broadcasts too all groups
 
  ╔ *Getchats:*
- ╚ `/getchats ID`*:* Gets a list of group names the user has been seen in. Bot owner only.
+ ╚ `/getchats ID`*:* Gets a list of group names the user has been seen in. Bot owner only
 
  ╔ *Blacklist:* 
  ╠ `/ignore`*:* Blacklists a user from 
- ╠  using the bot entirely.
- ╚ `/notice`*:* Whitelists the user to allow bot usage. 
+ ╠  using the bot entirely
+ ╚ `/notice`*:* Whitelists the user to allow bot usage
 
  ╔ *Speedtest:*
- ╚ `/speedtest`*:* Runs a speedtest and gives you 2 options to choose from, text or image output.
+ ╚ `/speedtest`*:* Runs a speedtest and gives you 2 options to choose from, text or image output
 
  ╔ *Global Bans:*
- ╠ `/gban user reason`*:* Globally bans a user.
+ ╠ `/gban user reason`*:* Globally bans a user
  ╚ `/ungban user reason`*:* Unbans the user from the global bans list
 
  ╔ *Module loading:*
@@ -583,10 +575,13 @@ Group admins/group owners do not need these commands.
  ╚ `/py`*:* Self explanatory
 
  ╔ *Windows self hosted only:*
- ╠ `/restart`*:* Restarts the bots service.
- ╚ `/gitpull`*:* Pulls the repo and then restarts the bots service.
+ ╠ `/restart`*:* Restarts the bots service
+ ╚ `/gitpull`*:* Pulls the repo and then restarts the bots service
 
-You can visit {SUPPORT_CHAT} if you want details on these.
+ ╔ *Chatbot:* 
+ ╚ `/listaichats`*:* Lists the chats the chatmode is enabled in
+
+Visit @{SUPPORT_CHAT} if you want details on these.
 """
 
 SUDO_HANDLER = CommandHandler(("addsudo", "adddragon"), addsudo)
