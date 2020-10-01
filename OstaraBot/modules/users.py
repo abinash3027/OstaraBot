@@ -53,7 +53,8 @@ def broadcast(update: Update, context: CallbackContext):
     to_send = update.effective_message.text.split(None, 1)
 
     if len(to_send) >= 2:
-        to_group = to_user = False
+        to_group = False
+        to_user = False
         if to_send[0] == '/broadcastgroups':
             to_group = True
         if to_send[0] == '/broadcastusers':
@@ -145,7 +146,7 @@ def __user_info__(user_id):
     if user_id == dispatcher.bot.id:
         return """I've seen them in... Wow. Are they stalking me? They're in all the same places I am... oh. It's me."""
     num_chats = sql.get_user_num_chats(user_id)
-    return f"""I've seen them in <code>{num_chats}</code> chats in total."""
+    return f"""╘══「 Groups count: <code>{num_chats}</code> 」"""
 
 
 def __stats__():
