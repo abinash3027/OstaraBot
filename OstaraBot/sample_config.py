@@ -21,8 +21,8 @@ class Config(object):
     OWNER_ID = 123456789  # If you dont know, run the bot and do /id in your private chat with it, also an integer
     OWNER_USERNAME = "Abinash"
     SUPPORT_CHAT = 'OstaraBotSupport'  #Your own group for support, do not add the @
-    JOIN_LOGGER = -1001253661229  #Prints any new group the bot is added to, prints just the name and ID.
-    EVENT_LOGS = -1001190806654  #Prints information like gbans, sudo promotes, AI enabled disable states that may help in debugging and shit
+    JOIN_LOGGER = -1001173242875  #Prints any new group the bot is added to, prints just the name and ID.
+    EVENT_LOGS = -1001173242875  #Prints information like gbans, sudo promotes, AI enabled disable states that may help in debugging and shit
 
     #RECOMMENDED
     SQLALCHEMY_DATABASE_URI = 'something://somewhat:user@hosturl:port/databasename'  # needed for any database modules
