@@ -8,7 +8,7 @@ from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon import events
 
-from telegram import MAX_MESSAGE_LENGTH, ParseMode, Update
+from telegram import MAX_MESSAGE_LENGTH, ParseMode, Update, MessageEntity
 from telegram.ext import CallbackContext, CommandHandler
 from telegram.ext.dispatcher import run_async
 from telegram.error import BadRequest
@@ -24,7 +24,7 @@ from OstaraBot.modules.sql.afk_sql import is_afk, check_afk_status
 from OstaraBot.modules.sql.users_sql import get_user_num_chats
 from OstaraBot.modules.helper_funcs.chat_status import sudo_plus
 from OstaraBot.modules.helper_funcs.extraction import extract_user
-from OstaraBot import telethn as SaitamaTelethonClient, TIGERS, DRAGONS, DEMONS
+from OstaraBot import telethn as OstaraBotTelethonClient, TIGERS, DRAGONS, DEMONS
 
 
 @run_async
@@ -68,7 +68,7 @@ def get_id(update: Update, context: CallbackContext):
                 parse_mode=ParseMode.HTML)
 
 
-@SaitamaTelethonClient.on(
+@OstaraBotTelethonClient.on(
     events.NewMessage(
         pattern='/ginfo ',
         from_users=(TIGERS or []) + (DRAGONS or []) + (DEMONS or [])))
