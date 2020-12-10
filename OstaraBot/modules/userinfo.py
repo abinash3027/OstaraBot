@@ -24,7 +24,7 @@ from OstaraBot.modules.sql.afk_sql import is_afk, check_afk_status
 from OstaraBot.modules.sql.users_sql import get_user_num_chats
 from OstaraBot.modules.helper_funcs.chat_status import sudo_plus
 from OstaraBot.modules.helper_funcs.extraction import extract_user
-from OstaraBot import telethn as OstaraBotTelethonClient, TIGERS, DRAGONS, DEMONS
+from OstaraBot import telethn as SaitamaTelethonClient, TIGERS, DRAGONS, DEMONS
 
 
 @run_async
@@ -68,7 +68,7 @@ def get_id(update: Update, context: CallbackContext):
                 parse_mode=ParseMode.HTML)
 
 
-@OstaraBotTelethonClient.on(
+@SaitamaTelethonClient.on(
     events.NewMessage(
         pattern='/ginfo ',
         from_users=(TIGERS or []) + (DRAGONS or []) + (DEMONS or [])))
