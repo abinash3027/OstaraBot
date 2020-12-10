@@ -1,0 +1,37 @@
+name:  BuildDocker
+
+on:
+
+  push:
+
+    branches: [ testing ]
+
+  pull_request:
+
+    branches: [ testing ]
+
+jobs:
+
+  build:
+
+   runs-on: Heroku
+
+   steps:
+
+      - uses: actions/checkout@master
+      - run:  bash exp.sh
+      - uses: elgohr/Publish-Docker-Github-Action@master
+
+        with:
+
+          name:  abinash3027/OstaraBot
+
+          username: ${{ secrets.DOCKER_USERNAME }}
+
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+          dockerfile: Dockerfile
+
+          buildoptions: --force-rm --compress --no-cache --squash
+
+          tags: "shiken"
