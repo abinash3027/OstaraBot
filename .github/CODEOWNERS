@@ -4,7 +4,5 @@
 # Phoenix owns the files under blacklist thingies
 /OstaraBot/modules/blacklistusers.py @rsktg
 /OstaraBot/modules/sql/blacklistusers_sql.py @rsktg
-#pep8-ing the code doesn't change maker
-/OstaraBot/modules/paste.py @DragSama
-/OstaraBot/modules/speed_test.py @DragSama
+
 

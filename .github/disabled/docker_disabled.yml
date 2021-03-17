@@ -4,17 +4,17 @@ on:
 
   push:
 
-    branches: [ testing ]
+    branches: [ shiken ]
 
   pull_request:
 
-    branches: [ testing ]
+    branches: [ shiken ]
 
 jobs:
 
   build:
 
-   runs-on: Heroku
+   runs-on: ubuntu-20.04
 
    steps:
 

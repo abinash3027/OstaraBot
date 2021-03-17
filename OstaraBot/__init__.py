@@ -11,10 +11,10 @@ StartTime = time.time()
 
 # enable logging
 logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[logging.FileHandler('log.txt'),
-              logging.StreamHandler()],
-    level=logging.INFO)
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
+    level=logging.INFO,
+)
 
 LOGGER = logging.getLogger(__name__)
 
@@ -25,47 +25,36 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     )
     quit(1)
 
-ENV = bool(os.environ.get('ENV', False))
+ENV = bool(os.environ.get("ENV", False))
 
 if ENV:
-    TOKEN = os.environ.get('TOKEN', None)
+    TOKEN = os.environ.get("TOKEN", None)
 
     try:
-        OWNER_ID = int(os.environ.get('OWNER_ID', None))
+        OWNER_ID = int(os.environ.get("OWNER_ID", None))
     except ValueError:
         raise Exception("Your OWNER_ID env variable is not a valid integer.")
 
-    MESSAGE_DUMP = os.environ.get('MESSAGE_DUMP', None)
+    JOIN_LOGGER = os.environ.get("JOIN_LOGGER", None)
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
 
     try:
-        SUDO_USERS = set(
-            int(x) for x in os.environ.get("SUDO_USERS", "").split())
+        DRAGONS = set(int(x) for x in os.environ.get("DRAGONS", "").split())
         DEV_USERS = set(int(x) for x in os.environ.get("DEV_USERS", "").split())
     except ValueError:
-        raise Exception(
-            "Your sudo or dev users list does not contain valid integers.")
+        raise Exception("Your sudo or dev users list does not contain valid integers.")
 
     try:
-        SUPPORT_USERS = set(
-            int(x) for x in os.environ.get("SUPPORT_USERS", "").split())
+        DEMONS = set(int(x) for x in os.environ.get("DEMONS", "").split())
     except ValueError:
-        raise Exception(
-            "Your support users list does not contain valid integers.")
+        raise Exception("Your support users list does not contain valid integers.")
 
     try:
-        WHITELIST_USERS = set(
-            int(x) for x in os.environ.get("WHITELIST_USERS", "").split())
+        WOLVES = set(int(x) for x in os.environ.get("WOLVES", "").split())
     except ValueError:
-        raise Exception(
-            "Your whitelisted users list does not contain valid integers.")
+        raise Exception("Your whitelisted users list does not contain valid integers.")
 
-    try:
-        TIGER_USERS = set(
-            int(x) for x in os.environ.get("TIGER_USERS", "").split())
-    except ValueError:
-        raise Exception(
-            "Your tiger users list does not contain valid integers.")
+        raise Exception("Your whitelisted users list does not contain valid integers.")
 
     INFOPIC = bool(os.environ.get("INFOPIC", False))
     EVENT_LOGS = os.environ.get("EVENT_LOGS", None)
@@ -112,31 +101,24 @@ else:
 
     JOIN_LOGGER = Config.JOIN_LOGGER
     OWNER_USERNAME = Config.OWNER_USERNAME
-
+    ALLOW_CHATS = Config.ALLOW_CHATS
     try:
-        SUDO_USERS = set(int(x) for x in Config.SUDO_USERS or [])
+        DRAGONS = set(int(x) for x in Config.DRAGONS or [])
         DEV_USERS = set(int(x) for x in Config.DEV_USERS or [])
     except ValueError:
-        raise Exception(
-            "Your sudo or dev users list does not contain valid integers.")
+        raise Exception("Your sudo or dev users list does not contain valid integers.")
 
     try:
-        SUPPORT_USERS = set(int(x) for x in Config.SUPPORT_USERS or [])
+        DEMONS = set(int(x) for x in Config.DEMONS or [])
     except ValueError:
-        raise Exception(
-            "Your support users list does not contain valid integers.")
+        raise Exception("Your support users list does not contain valid integers.")
 
     try:
-        WHITELIST_USERS = set(int(x) for x in Config.WHITELIST_USERS or [])
+        WOLVES = set(int(x) for x in Config.WOLVES or [])
     except ValueError:
-        raise Exception(
-            "Your whitelisted users list does not contain valid integers.")
+        raise Exception("Your whitelisted users list does not contain valid integers.")
 
-    try:
-        TIGER_USERS = set(int(x) for x in Config.TIGER_USERS or [])
-    except ValueError:
-        raise Exception(
-            "Your tiger users list does not contain valid integers.")
+        raise Exception("Your whitelisted users list does not contain valid integers.")
 
     EVENT_LOGS = Config.EVENT_LOGS
     WEBHOOK = Config.WEBHOOK
@@ -170,29 +152,34 @@ else:
     except ValueError:
         raise Exception("Your blacklisted chats list does not contain valid integers.")
 
-SUDO_USERS.add(OWNER_ID)
+DRAGONS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
 
 if not SPAMWATCH_API:
     sw = None
     LOGGER.warning("SpamWatch API key missing! recheck your config.")
 else:
-    sw = spamwatch.Client(SPAMWATCH_API)
+    try:
+        sw = spamwatch.Client(SPAMWATCH_API)
+    except:
+        sw = None
+        LOGGER.warning("Can't connect to SpamWatch!")
 
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("OstaraBot", API_ID, API_HASH)
 dispatcher = updater.dispatcher
 
-SUDO_USERS = list(SUDO_USERS) + list(DEV_USERS)
+DRAGONS = list(DRAGONS) + list(DEV_USERS)
 DEV_USERS = list(DEV_USERS)
-WHITELIST_USERS = list(WHITELIST_USERS)
-SUPPORT_USERS = list(SUPPORT_USERS)
-TIGER_USERS = list(TIGER_USERS)
+WOLVES = list(WOLVES)
+DEMONS = list(DEMONS)
 
 # Load at end to ensure all prev variables have been set
-from OstaraBot.modules.helper_funcs.handlers import (CustomCommandHandler,
-                                                     CustomMessageHandler,
-                                                     CustomRegexHandler)
+from OstaraBot.modules.helper_funcs.handlers import (
+    CustomCommandHandler,
+    CustomMessageHandler,
+    CustomRegexHandler,
+)
 
 # make sure the regex handler can take extra kwargs
 tg.RegexHandler = CustomRegexHandler

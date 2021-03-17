@@ -196,23 +196,23 @@ def info(update: Update, context: CallbackContext):
     disaster_level_present = False
 
     if user.id == OWNER_ID:
-        text += "\n\nUser level: <b>god</b>"
+        text += "\n\nUser level: <b>God</b>"
         disaster_level_present = True
     elif user.id in DEV_USERS:
-        text += "\n\nUser level: <b>developer</b>"
+        text += "\n\nUser level: <b>Developer</b>"
         disaster_level_present = True
     elif user.id in DRAGONS:
-        text += "\n\nUser level: <b>sudo</b>"
+        text += "\n\nUser level: <b>Sudo</b>"
         disaster_level_present = True
     elif user.id in DEMONS:
-        text += "\n\nUser level: <b>support</b>"
+        text += "\n\nUser level: <b>Support</b>"
         disaster_level_present = True
     elif user.id in WOLVES:
-        text += "\n\nUser level: <b>whitelist</b>"
+        text += "\n\nUser level: <b>Whitelist</b>"
         disaster_level_present = True
 
     # if disaster_level_present:
-    #     text += ' [<a href="https://t.me/OnePunchUpdates/155">?</a>]'.format(
+    #     text += ' [<a href="https://t.me/OstaraBotSupport/72">?</a>]'.format(
     #         bot.username)
 
     try:
