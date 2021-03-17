@@ -1,11 +1,19 @@
 # Module to blacklist users and prevent them from using commands by @TheRealPhoenix
 import html
 import OstaraBot.modules.sql.blacklistusers_sql as sql
-from OstaraBot import (DEV_USERS, OWNER_ID, DRAGONS, DEMONS, TIGERS, WOLVES,
-                       dispatcher)
+from OstaraBot import (
+    DEV_USERS,
+    OWNER_ID,
+    DRAGONS,
+    DEMONS,
+    WOLVES,
+    dispatcher,
+)
 from OstaraBot.modules.helper_funcs.chat_status import dev_plus
-from OstaraBot.modules.helper_funcs.extraction import (extract_user,
-                                                       extract_user_and_text)
+from OstaraBot.modules.helper_funcs.extraction import (
+    extract_user,
+    extract_user_and_text,
+)
 from OstaraBot.modules.log_channel import gloggable
 from telegram import ParseMode, Update
 from telegram.error import BadRequest
@@ -16,7 +24,6 @@ BLACKLISTWHITELIST = [OWNER_ID] + DEV_USERS + DRAGONS + WOLVES + DEMONS
 BLABLEUSERS = [OWNER_ID] + DEV_USERS
 
 
-@run_async
 @dev_plus
 @gloggable
 def bl_user(update: Update, context: CallbackContext) -> str:
@@ -30,12 +37,11 @@ def bl_user(update: Update, context: CallbackContext) -> str:
         return ""
 
     if user_id == bot.id:
-        message.reply_text(
-            "How am I supposed to do my work if I am ignoring myself?")
+        message.reply_text("How am I supposed to do my work if I am ignoring myself?")
         return ""
 
     if user_id in BLACKLISTWHITELIST:
-        message.reply_text("No!\nNoticing Disasters is my job.")
+        message.reply_text("No!\nNoticing super users is my job.")
         return ""
 
     try:
@@ -60,7 +66,6 @@ def bl_user(update: Update, context: CallbackContext) -> str:
     return log_message
 
 
-@run_async
 @dev_plus
 @gloggable
 def unbl_user(update: Update, context: CallbackContext) -> str:
@@ -103,7 +108,6 @@ def unbl_user(update: Update, context: CallbackContext) -> str:
         return ""
 
 
-@run_async
 @dev_plus
 def bl_users(update: Update, context: CallbackContext):
     users = []
@@ -117,14 +121,13 @@ def bl_users(update: Update, context: CallbackContext):
                 f"• {mention_html(user.id, html.escape(user.first_name))} :- {reason}"
             )
         else:
-            users.append(
-                f"• {mention_html(user.id, html.escape(user.first_name))}")
+            users.append(f"• {mention_html(user.id, html.escape(user.first_name))}")
 
     message = "<b>Blacklisted Users</b>\n"
     if not users:
         message += "Noone is being ignored as of yet."
     else:
-        message += '\n'.join(users)
+        message += "\n".join(users)
 
     update.effective_message.reply_text(message, parse_mode=ParseMode.HTML)
 
@@ -137,7 +140,7 @@ def __user_info__(user_id):
         return ""
     if user_id == dispatcher.bot.id:
         return ""
-    if int(user_id) in DRAGONS + TIGERS + WOLVES:
+    if int(user_id) in DRAGONS:
         return ""
     if is_blacklisted:
         text = text.format("Yes")
@@ -150,9 +153,9 @@ def __user_info__(user_id):
     return text
 
 
-BL_HANDLER = CommandHandler("ignore", bl_user)
-UNBL_HANDLER = CommandHandler("notice", unbl_user)
-BLUSERS_HANDLER = CommandHandler("ignoredlist", bl_users)
+BL_HANDLER = CommandHandler("ignore", bl_user, run_async=True)
+UNBL_HANDLER = CommandHandler("notice", unbl_user, run_async=True)
+BLUSERS_HANDLER = CommandHandler("ignoredlist", bl_users, run_async=True)
 
 dispatcher.add_handler(BL_HANDLER)
 dispatcher.add_handler(UNBL_HANDLER)

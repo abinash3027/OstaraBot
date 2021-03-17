@@ -14,27 +14,40 @@ from telethon import events
 from OstaraBot import telethn
 
 COLORS = [
-    "#F07975", "#F49F69", "#F9C84A", "#8CC56E", "#6CC7DC", "#80C1FA", "#BCB3F9", "#E181AC"]
+    "#F07975",
+    "#F49F69",
+    "#F9C84A",
+    "#8CC56E",
+    "#6CC7DC",
+    "#80C1FA",
+    "#BCB3F9",
+    "#E181AC",
+]
 
 
 async def process(msg, user, client, reply, replied=None):
     if not os.path.isdir("resources"):
         os.mkdir("resources", 0o755)
         urllib.request.urlretrieve(
-            'https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Regular.ttf',
-            'resources/Roboto-Regular.ttf')
+            "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Regular.ttf",
+            "resources/Roboto-Regular.ttf",
+        )
         urllib.request.urlretrieve(
-            'https://github.com/erenmetesar/modules-repo/raw/master/Quivira.otf',
-            'resources/Quivira.otf')
+            "https://github.com/erenmetesar/modules-repo/raw/master/Quivira.otf",
+            "resources/Quivira.otf",
+        )
         urllib.request.urlretrieve(
-            'https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Medium.ttf',
-            'resources/Roboto-Medium.ttf')
+            "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Medium.ttf",
+            "resources/Roboto-Medium.ttf",
+        )
         urllib.request.urlretrieve(
-            'https://github.com/erenmetesar/modules-repo/raw/master/DroidSansMono.ttf',
-            'resources/DroidSansMono.ttf')
+            "https://github.com/erenmetesar/modules-repo/raw/master/DroidSansMono.ttf",
+            "resources/DroidSansMono.ttf",
+        )
         urllib.request.urlretrieve(
-            'https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Italic.ttf',
-            'resources/Roboto-Italic.ttf')
+            "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Italic.ttf",
+            "resources/Roboto-Italic.ttf",
+        )
 
     # Importing fonts and gettings the size of text
     font = ImageFont.truetype("resources/Roboto-Medium.ttf", 43, encoding="utf-16")
@@ -70,7 +83,9 @@ async def process(msg, user, client, reply, replied=None):
 
     title = ""
     try:
-        details = await client(functions.channels.GetParticipantRequest(reply.chat_id, user.id))
+        details = await client(
+            functions.channels.GetParticipantRequest(reply.chat_id, user.id)
+        )
         if isinstance(details.participant, types.ChannelParticipantCreator):
             title = details.participant.rank if details.participant.rank else "Creator"
         elif isinstance(details.participant, types.ChannelParticipantAdmin):
@@ -119,8 +134,10 @@ async def process(msg, user, client, reply, replied=None):
 
     # Creating a big canvas to gather all the elements
     canvassize = (
-        middle.width + pfpbg.width, top.height + middle.height + bottom.height)
-    canvas = Image.new('RGBA', canvassize)
+        middle.width + pfpbg.width,
+        top.height + middle.height + bottom.height,
+    )
+    canvas = Image.new("RGBA", canvassize)
     draw = ImageDraw.Draw(canvas)
 
     y = 80
@@ -159,7 +176,13 @@ async def process(msg, user, client, reply, replied=None):
             replied.text = "Voice Message"
         elif replied.document:
             replied.text = "Document"
-        await replied_user(draw, reptot, replied.message.replace("\n", " "), maxlength + len(title), len(title))
+        await replied_user(
+            draw,
+            reptot,
+            replied.message.replace("\n", " "),
+            maxlength + len(title),
+            len(title),
+        )
         y = 200
     elif reply.sticker:
         sticker = await reply.download_media()
@@ -180,8 +203,11 @@ async def process(msg, user, client, reply, replied=None):
             docsize = str(round(reply.document.size / 1024 ** 2, 2)) + " MB "
         else:
             docsize = str(round(reply.document.size / 1024 ** 3, 2)) + " GB "
-        docbglen = font.getsize(docsize)[0] if font.getsize(docsize)[0] > font.getsize(docname)[0] else \
-        font.getsize(docname)[0]
+        docbglen = (
+            font.getsize(docsize)[0]
+            if font.getsize(docsize)[0] > font.getsize(docname)[0]
+            else font.getsize(docname)[0]
+        )
         canvas = canvas.resize((pfpbg.width + width + docbglen, 160 + height))
         top, middle, bottom = await drawer(width + docbglen, height + 30)
         canvas.paste(pfpbg, (0, 0))
@@ -223,22 +249,32 @@ async def process(msg, user, client, reply, replied=None):
     textcolor = "white"
     for line in text:
         for letter in line:
-            index = msg.find(letter) if emojicount == 0 else msg.find(letter) + emojicount
+            index = (
+                msg.find(letter) if emojicount == 0 else msg.find(letter) + emojicount
+            )
             for offset, length in bold.items():
                 if index in range(offset, length):
-                    font2 = ImageFont.truetype("resources/Roboto-Medium.ttf", 33, encoding="utf-16")
+                    font2 = ImageFont.truetype(
+                        "resources/Roboto-Medium.ttf", 33, encoding="utf-16"
+                    )
                     textcolor = "white"
             for offset, length in italic.items():
                 if index in range(offset, length):
-                    font2 = ImageFont.truetype("resources/Roboto-Italic.ttf", 33, encoding="utf-16")
+                    font2 = ImageFont.truetype(
+                        "resources/Roboto-Italic.ttf", 33, encoding="utf-16"
+                    )
                     textcolor = "white"
             for offset, length in mono.items():
                 if index in range(offset, length):
-                    font2 = ImageFont.truetype("resources/DroidSansMono.ttf", 30, encoding="utf-16")
+                    font2 = ImageFont.truetype(
+                        "resources/DroidSansMono.ttf", 30, encoding="utf-16"
+                    )
                     textcolor = "white"
             for offset, length in link.items():
                 if index in range(offset, length):
-                    font2 = ImageFont.truetype("resources/Roboto-Regular.ttf", 30, encoding="utf-16")
+                    font2 = ImageFont.truetype(
+                        "resources/Roboto-Regular.ttf", 30, encoding="utf-16"
+                    )
                     textcolor = "#898989"
             if letter in emoji.UNICODE_EMOJI:
                 newemoji, mask = await emoji_fetch(letter)
@@ -260,7 +296,7 @@ async def process(msg, user, client, reply, replied=None):
 
 async def drawer(width, height):
     # Top part
-    top = Image.new('RGBA', (width, 20), (0, 0, 0, 0))
+    top = Image.new("RGBA", (width, 20), (0, 0, 0, 0))
     draw = ImageDraw.Draw(top)
     draw.line((10, 0, top.width - 20, 0), fill=(29, 29, 29, 255), width=50)
     draw.pieslice((0, 0, 30, 50), 180, 270, fill=(29, 29, 29, 255))
@@ -277,7 +313,7 @@ async def drawer(width, height):
 
 async def fontTest(letter):
     test = TTFont("resources/Roboto-Medium.ttf")
-    for table in test['cmap'].tables:
+    for table in test["cmap"].tables:
         if ord(letter) in table.cmap.keys():
             return True
 
@@ -316,9 +352,7 @@ async def doctype(name, size, type, canvas):
     canvas.paste(doc, (160, 23))
     draw2 = ImageDraw.Draw(canvas)
     draw2.text((320, 40), name, font=font, fill="white")
-    draw2.text(
-        (320, 97), size
-                   + type, font=font, fill="#AAAAAA")
+    draw2.text((320, 97), size + type, font=font, fill="#AAAAAA")
     return canvas
 
 
@@ -335,13 +369,22 @@ async def no_photo(reply, tot):
 
 async def emoji_fetch(emoji):
     emojis = json.loads(
-        urllib.request.urlopen("https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt").read().decode())
+        urllib.request.urlopen(
+            "https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt"
+        )
+        .read()
+        .decode()
+    )
     if emoji in emojis:
         img = emojis[emoji]
-        return await transparent(urllib.request.urlretrieve(img, "resources/emoji.png")[0])
+        return await transparent(
+            urllib.request.urlretrieve(img, "resources/emoji.png")[0]
+        )
     else:
-        img = emojis["?"]
-        return await transparent(urllib.request.urlretrieve(img, "resources/emoji.png")[0])
+        img = emojis["⛔"]
+        return await transparent(
+            urllib.request.urlretrieve(img, "resources/emoji.png")[0]
+        )
 
 
 async def transparent(emoji):
@@ -361,7 +404,7 @@ async def replied_user(draw, tot, text, maxlength, title):
     textfont = ImageFont.truetype("resources/Roboto-Regular.ttf", 32)
     textfallback = ImageFont.truetype("resources/Roboto-Medium.ttf", 38)
     maxlength = maxlength + 7 if maxlength < 10 else maxlength
-    text = text[:maxlength - 2] + ".." if len(text) > maxlength else text
+    text = text[: maxlength - 2] + ".." if len(text) > maxlength else text
     draw.line((165, 90, 165, 170), width=5, fill="white")
     space = 0
     for letter in tot:
@@ -389,11 +432,15 @@ async def quotly(event):
     msg = reply.message
     repliedreply = await reply.get_reply_message()
     user = (
-        await event.client.get_entity(reply.forward.sender) if reply.fwd_from
-        else reply.sender)
+        await event.client.get_entity(reply.forward.sender)
+        if reply.fwd_from
+        else reply.sender
+    )
     res, canvas = await process(msg, user, event.client, reply, repliedreply)
     if not res:
         return
-    canvas.save('sticker.webp')
-    await event.client.send_file(event.chat_id, "sticker.webp", reply_to=event.reply_to_msg_id)
-    os.remove('sticker.webp')
+    canvas.save("sticker.webp")
+    await event.client.send_file(
+        event.chat_id, "sticker.webp", reply_to=event.reply_to_msg_id
+    )
+    os.remove("sticker.webp")

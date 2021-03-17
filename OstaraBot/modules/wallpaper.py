@@ -9,7 +9,6 @@ from telegram.ext import CallbackContext, run_async
 # Wallpapers module by @TheRealPhoenix using wall.alphacoders.com
 
 
-@run_async
 def wall(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     msg = update.effective_message
@@ -41,17 +40,19 @@ def wall(update: Update, context: CallbackContext):
                 bot.send_photo(
                     chat_id,
                     photo=wallpaper,
-                    caption='Preview',
+                    caption="Preview",
                     reply_to_message_id=msg_id,
-                    timeout=60)
+                    timeout=60,
+                )
                 bot.send_document(
                     chat_id,
                     document=wallpaper,
-                    filename='wallpaper',
+                    filename="wallpaper",
                     caption=caption,
                     reply_to_message_id=msg_id,
-                    timeout=60)
+                    timeout=60,
+                )
 
 
-WALLPAPER_HANDLER = DisableAbleCommandHandler("wall", wall)
+WALLPAPER_HANDLER = DisableAbleCommandHandler("wall", wall, run_async=True)
 dispatcher.add_handler(WALLPAPER_HANDLER)

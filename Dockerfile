@@ -65,11 +65,11 @@ RUN apt update && apt upgrade -y && \
 RUN pip3 install --upgrade pip setuptools
 
 # Copy Python Requirements to /root/OstaraBot
-RUN git clone -b testing https://github.com/abinash3027/OstaraBot /root/OstaraBot
+RUN git clone -b master https://github.com/abinash3027/OstaraBot /root/OstaraBot
 WORKDIR /root/OstaraBot
 
 #Copy config file to /root/OstaraBot/OstaraBot
-COPY OstaraBot/sample_config.py ./OstaraBot/config.py* /root/OstaraBot/OstaraBot/
+COPY ./OstaraBot/sample_config.py ./OstaraBot/config.py* /root/OstaraBot/OstaraBot/
 
 ENV PATH="/home/bot/bin:$PATH"
 

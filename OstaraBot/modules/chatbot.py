@@ -1,4 +1,5 @@
 import html
+
 # AI module using Intellivoid's Coffeehouse API by @TheRealPhoenix
 from time import sleep, time
 
@@ -12,15 +13,19 @@ from OstaraBot.modules.helper_funcs.filters import CustomFilters
 from OstaraBot.modules.log_channel import gloggable
 from telegram import Update
 from telegram.error import BadRequest, RetryAfter, Unauthorized
-from telegram.ext import (CallbackContext, CommandHandler, Filters,
-                          MessageHandler, run_async)
+from telegram.ext import (
+    CallbackContext,
+    CommandHandler,
+    Filters,
+    MessageHandler,
+    run_async,
+)
 from telegram.utils.helpers import mention_html
 
 CoffeeHouseAPI = API(AI_API_KEY)
 api_client = LydiaAI(CoffeeHouseAPI)
 
 
-@run_async
 @user_admin
 @gloggable
 def add_chat(update: Update, context: CallbackContext):
@@ -50,7 +55,6 @@ def add_chat(update: Update, context: CallbackContext):
         return ""
 
 
-@run_async
 @user_admin
 @gloggable
 def remove_chat(update: Update, context: CallbackContext):
@@ -74,7 +78,7 @@ def remove_chat(update: Update, context: CallbackContext):
 
 def check_message(context: CallbackContext, message):
     reply_msg = message.reply_to_message
-    if message.text.lower() == "ostara":
+    if message.text.lower() == "OstaraBot":
         return True
     if reply_msg:
         if reply_msg.from_user.id == context.bot.get_me().id:
@@ -83,7 +87,6 @@ def check_message(context: CallbackContext, message):
         return False
 
 
-@run_async
 def chatbot(update: Update, context: CallbackContext):
     global api_client
     msg = update.effective_message
@@ -107,24 +110,23 @@ def chatbot(update: Update, context: CallbackContext):
         except ValueError:
             pass
         try:
-            bot.send_chat_action(chat_id, action='typing')
+            bot.send_chat_action(chat_id, action="typing")
             rep = api_client.think_thought(sesh, query)
             sleep(0.3)
             msg.reply_text(rep, timeout=60)
         except CFError as e:
             pass
-            #bot.send_message(OWNER_ID,
+            # bot.send_message(OWNER_ID,
             #                 f"Chatbot error: {e} occurred in {chat_id}!")
 
 
-@run_async
 def list_chatbot_chats(update: Update, context: CallbackContext):
     chats = sql.get_all_chats()
     text = "<b>AI-Enabled Chats</b>\n"
     for chat in chats:
         try:
             x = context.bot.get_chat(int(*chat))
-            name = x.title if x.title else x.first_name
+            name = x.title or x.first_name
             text += f"• <code>{name}</code>\n"
         except BadRequest:
             sql.rem_chat(*chat)
@@ -147,13 +149,17 @@ Reports bugs at @{SUPPORT_CHAT}
 *Powered by CoffeeHouse* (https://coffeehouse.intellivoid.net/) from @Intellivoid
 """
 
-ADD_CHAT_HANDLER = CommandHandler("addchat", add_chat)
-REMOVE_CHAT_HANDLER = CommandHandler("rmchat", remove_chat)
+ADD_CHAT_HANDLER = CommandHandler("addchat", add_chat, run_async=True)
+REMOVE_CHAT_HANDLER = CommandHandler("rmchat", remove_chat, run_async=True)
 CHATBOT_HANDLER = MessageHandler(
-    Filters.text & (~Filters.regex(r"^#[^\s]+") & ~Filters.regex(r"^!")
-                    & ~Filters.regex(r"^\/")), chatbot)
+    Filters.text
+    & (~Filters.regex(r"^#[^\s]+") & ~Filters.regex(r"^!") & ~Filters.regex(r"^\/")),
+    chatbot,
+    run_async=True
+)
 LIST_CB_CHATS_HANDLER = CommandHandler(
-    "listaichats", list_chatbot_chats, filters=CustomFilters.dev_filter)
+    "listaichats", list_chatbot_chats, filters=CustomFilters.dev_filter, run_async=True
+)
 # Filters for ignoring #note messages, !commands and sed.
 
 dispatcher.add_handler(ADD_CHAT_HANDLER)
@@ -164,6 +170,8 @@ dispatcher.add_handler(LIST_CB_CHATS_HANDLER)
 __mod_name__ = "Chatbot"
 __command_list__ = ["addchat", "rmchat", "listaichats"]
 __handlers__ = [
-    ADD_CHAT_HANDLER, REMOVE_CHAT_HANDLER, CHATBOT_HANDLER,
-    LIST_CB_CHATS_HANDLER
+    ADD_CHAT_HANDLER,
+    REMOVE_CHAT_HANDLER,
+    CHATBOT_HANDLER,
+    LIST_CB_CHATS_HANDLER,
 ]
