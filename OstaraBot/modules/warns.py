@@ -5,8 +5,7 @@ from typing import Optional
 import telegram
 from OstaraBot import BAN_STICKER, TIGER_USERS, WHITELIST_USERS, dispatcher
 from OstaraBot.modules.disable import DisableAbleCommandHandler
-from OstaraBot.modules.helper_funcs.chat_status import (bot_admin,
-                                                        can_restrict,
+from OstaraBot.modules.helper_funcs.chat_status import (bot_admin, can_restrict,
                                                         is_user_admin,
                                                         user_admin,
                                                         user_admin_no_reply)

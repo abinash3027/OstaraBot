@@ -1,6 +1,7 @@
 from OstaraBot import dispatcher
-from OstaraBot.modules.helper_funcs.chat_status import (
-    bot_admin, is_bot_admin, is_user_ban_protected, is_user_in_chat)
+from OstaraBot.modules.helper_funcs.chat_status import (bot_admin, is_bot_admin,
+                                                        is_user_ban_protected,
+                                                        is_user_in_chat)
 from OstaraBot.modules.helper_funcs.extraction import extract_user_and_text
 from OstaraBot.modules.helper_funcs.filters import CustomFilters
 from telegram import Update, ChatPermissions
