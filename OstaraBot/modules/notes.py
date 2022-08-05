@@ -6,8 +6,7 @@ import OstaraBot.modules.sql.notes_sql as sql
 from OstaraBot import LOGGER, MESSAGE_DUMP, SUPPORT_CHAT, dispatcher
 from OstaraBot.modules.disable import DisableAbleCommandHandler
 from OstaraBot.modules.helper_funcs.chat_status import user_admin, connection_status
-from OstaraBot.modules.helper_funcs.misc import (build_keyboard,
-                                                 revert_buttons)
+from OstaraBot.modules.helper_funcs.misc import (build_keyboard, revert_buttons)
 from OstaraBot.modules.helper_funcs.msg_types import get_note_type
 from OstaraBot.modules.helper_funcs.string_handling import escape_invalid_curly_brackets
 from telegram import (MAX_MESSAGE_LENGTH, InlineKeyboardMarkup, Message,

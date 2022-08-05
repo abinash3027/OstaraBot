@@ -2,8 +2,7 @@ import html
 from typing import Optional
 
 from OstaraBot import LOGGER, TIGER_USERS, dispatcher
-from OstaraBot.modules.helper_funcs.chat_status import (bot_admin,
-                                                        can_restrict,
+from OstaraBot.modules.helper_funcs.chat_status import (bot_admin, can_restrict,
                                                         connection_status,
                                                         is_user_admin,
                                                         user_admin)
